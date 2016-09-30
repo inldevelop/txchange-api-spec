@@ -1,0 +1,552 @@
+FORMAT: 1A
+HOST: http://txchange.apiary.io/api/v1
+
+# txchange
+
+txchange is an API to allow consumers to participate as shippers or carriers in a 
+Truck Exchange system to allow them to post loads (as shippers) so carriers can take those 
+loads and move them from origin to destination according to the load posts terms and keep 
+the shippers informed on every moment about the load location and status.
+
+There are three user roles:
++ `shipper`
++ `carrier`
++ `admin`
+
+Some resources and actions are limited to certain user roles. For example, only users with
+the `shipper` role can post new loads and only users with the `admin` user role can 
+register new users. 
+
+Some actions behave different according to the user role. For example, listing loads will 
+bring all the loads posted by a user with `shipper` role or the load taken by a user with 
+`carrier` role.
+
+# Data Structures
+
+## Load (object)
+
++ loadId (number) - Unique Load Identifier 
++ shipperId (number) - Id of the Shipper
++ carrierId (number) - Id of the Carrier who taken this load or zero if untaken
++ loadName (string) - Name assigned by the shipper
++ pickupNumber (number) - This load can be part of a multiple loads project, the shipper can use this field to identify uniquely this loa din the project
++ loadReference (string) - This field can be used by the shipper to specify a reference for the load, like an invoice number, B/L, purchase order or any other reference the shipper likes.
++ rate (number) - The amount of money the shipper will pay to the carrier when the load has been delivered
++ origin (string) - The city, state (or Zip code) and country the merchandise must be picked up
++ destination (string) - The city, state (or Zip code) and country the merchandise must be delivered to
++ borderCrossingAt (string) - The city and state where the load will leave the country. Used when the origin and destination countries are not the same.
++ commodity (string) - Description of merchandise being included in this load
++ equipmentType (string) - The type of equipment required
++ ftl (string) - Identifies if this load requires a dedicated equipment ("FTL") or can share equipment with other loads ("LTL")
++ weight (number) - Weight of the load expressed in pounds.
++ packages (number) - Qty of packages
++ packageType (string) - How this merchandise is packaged.
++ length (number) - Length occupied in the equipment by the load, zero means legal length (i.e.: Non oversize)
++ width (number) - Width occupied in the equipment by the load, zero means legal dimension (i.e.: Non oversize)
++ height (number) - Height occupied in the equipment by the load, zero means legal dimension (i.e.: Non oversize)
++ pickupWindowStart (string) - What is the earliest date & time the carrier can arrive at origin to pickup the load
++ pickupWindowEnd (string) - What is the latest date & time the carrier can arrive to pickup the load
++ deliveryWindowStart (string) - What is the earliest date & time the carrier can arrive at destination to deliver the load
++ deliveryWindowEnd (string) - What is the latest date & time the carrier can arrive to destination to deliver the load
++ postedOn (string) - The server date & time when this load was posted by the shipper
++ loadStatus (string) - The current load status (Inactive, Posted, Taken, In Transit, Delivered, Cancelled)
+
+## Location (object)
++ city (string) - city name
++ state (string) - State name
++ country (string) - Country name
++ zipcode (string) - zipcode
+
+## Address (object)
++ streetAddress1 (string) - Basic street address info
++ streetAddress2 (string) - Additional street address info
++ city (string) - city name
++ state (string) - State name
++ country (string) - Country name
++ zipcode (string) - zipcode
+
+## Login [/login]
+
+### Login [GET]
+Authenticate user and generate new access token 
+
++ Request (application/json)
+
+        {
+            "userName"="test",
+            "pwd"="testpwd"
+        }
+        
++ Response 200 (application/json)
+
+        {
+            "access_token":"dflkjhgsldkjfgh.sdfkljghls.dsfklghjslk"
+        }
+
+## Logout [/logout{?access_token}]
+Disconnect user and invalidate access token
+
++ Parameters
+    + access_token (required, string) ... JSON Web token 
+
+### Logout [GET]
+
++ Response 204 (application/json)
+
+
+## Group Loads
+## Loads [/loads{?status,postedDatePeriod}{?access_token}]
+
+### List Loads [GET]
+The loads listed are dependent on the user type and parameters.  
++ Users with the `shipper` role get listed only the loads belonging to them.  
++ Users with the `carrier` role get listed all the active posted loads available to be 
+taken and also the loads already taken by the shipper.
+
++ Parameters
+    + status (optional, string) ... Is any of the following: `Inactive`, `Posted`, `Taken`, `InTransit`, `Delivered`, `Cancelled` also you can use the next pseudo-statuses: `All` (All statuses), `Active` (Includes `Posted`, `Taken`, `InTransit`), `Assigned` (Includes `Taken`, `InTransit`). Default `Active`.
+    + postedDatePeriod (optional, string) ... Required if status is `All` or `Delivered`. Examples: "20160501-","20160501-20160630" 
+    + access_token (optional, string) ... JSON Web token 
+
+
++ Response 200 (application/json)
+
+        [
+            {
+                "loadId": 1,
+                "shipperId": 1,
+                "carrierId": 1,
+                "loadName": "Water pipes",
+                "pickupNumber": 1,
+                "loadReference": "AJ-182377",
+                "rate": 430.00,
+                "origin": {"city":"Laredo", "state":"TX", "country", "USA", "zipcode":""},
+                "destination": {"city":"Dallas", "state":"TX", "country", "USA", "zipcode":""},
+                "borderCrossingAt":"Laredo, TX",
+                "commodity":"Water pipes",
+                "equipment type":"50' platform",
+                "fullOrPartial":"Full",
+                "weight": 1200,
+                "packages": 60,
+                "packageType":"Carton",
+                "length":"",
+                "width":"",
+                "height":"",
+                "pickupWindowStart":"2016-08-05T08:00:00.620Z",
+                "pickupWindowEnd":"2016-08-05T18:00:00.620Z",
+                "deliveryWindowStart":"2016-08-07T10:00:00.620Z",
+                "deliveryWindowEnd":"2016-08-05T17:00:00.620Z",
+                "postedOn":"2016-08-01T11:35:43.620Z",
+                "loadStatus":"Posted"
+            }
+        ]
+
+### Create a New Load [POST]
+Create a new load. A new load can be created with `Inactive` or `Posted` status.  
+Only users with the `shipper` role can call this action.
+
++ Parameters
+    + access_token (optional, string) ... JSON Web token 
+
++ Request (application/json)
+
+        {
+            "loadId": 1,
+            "shipperId": 1,
+            "loadName": "Water pipes",
+            "pickupNumber": 1,
+            "loadReference": "AJ-182377",
+            "rate": 430.00,
+            "origin": {"city":"Laredo", "state":"TX", "country", "USA", "zipcode":""},
+            "destination": {"city":"Dallas", "state":"TX", "country", "USA", "zipcode":""},
+            "borderCrossingAt":"Laredo, TX",
+            "commodity":"Water pipes",
+            "equipment type":"50' platform",
+            "fullOrPartial":"Full",
+            "weight": 1200,
+            "packages": 60,
+            "packageType":"Carton",
+            "length":"",
+            "width":"",
+            "height":"",
+            "pickupWindowStart":"2016-08-05T08:00:00.620Z",
+            "pickupWindowEnd":"2016-08-05T18:00:00.620Z",
+            "deliveryWindowStart":"2016-08-07T10:00:00.620Z",
+            "deliveryWindowEnd":"2016-08-05T17:00:00.620Z",
+            "loadStatus":"Inactive"
+        }
+
++ Response 201 (application/json)
+
+    + Headers
+
+            Location: /loads/2
+
+    + Body
+
+            {
+                "loadId": 1,
+                "shipperId": 1,
+                "carrierId": 0,
+                "loadName": "Water pipes",
+                "pickupNumber": 1,
+                "loadReference": "AJ-182377",
+                "rate": 430.00,
+                "origin": {"city":"Laredo", "state":"TX", "country", "USA", "zipcode":""},
+                "destination": {"city":"Dallas", "state":"TX", "country", "USA", "zipcode":""},
+                "borderCrossingAt":"Laredo, TX",
+                "commodity":"Water pipes",
+                "equipment type":"50' platform",
+                "fullOrPartial":"Full",
+                "weight": 1200,
+                "packages": 60,
+                "packageType":"Carton",
+                "length":"",
+                "width":"",
+                "height":"",
+                "pickupWindowStart":"2016-08-05T08:00:00.620Z",
+                "pickupWindowEnd":"2016-08-05T18:00:00.620Z",
+                "deliveryWindowStart":"2016-08-07T10:00:00.620Z",
+                "deliveryWindowEnd":"2016-08-05T17:00:00.620Z",
+                "postedOn":"2016-08-01T11:35:43.620Z",
+                "loadStatus":"Inactive"
+            }
+
+## Load [/loads/{load_id}{?access_token}]
+
++ Parameters
+    + load_id (number) - ID of the Load in the form of an integer
+    + access_token (optional, string) ... JSON Web token 
+
+### Get Load Detail [GET]
+
++ Response 200 (application/json)
+
+            {
+                "loadId": 2,
+                "shipperId": 1,
+                "carrierId": 0,
+                "loadName": "Water pipes",
+                "pickupNumber": 1,
+                "loadReference": "AJ-182377",
+                "rate": 430.00,
+                "origin": {"city":"Laredo", "state":"TX", "country", "USA", "zipcode":""},
+                "destination": {"city":"Dallas", "state":"TX", "country", "USA", "zipcode":""},
+                "borderCrossingAt":"Laredo, TX",
+                "commodity":"Water pipes",
+                "equipment type":"50' platform",
+                "fullOrPartial":"Full",
+                "weight": 1200,
+                "packages": 60,
+                "packageType":"Carton",
+                "length":"",
+                "width":"",
+                "height":"",
+                "pickupWindowStart":"2016-08-05T08:00:00.620Z",
+                "pickupWindowEnd":"2016-08-05T18:00:00.620Z",
+                "deliveryWindowStart":"2016-08-07T10:00:00.620Z",
+                "deliveryWindowEnd":"2016-08-05T17:00:00.620Z",
+                "postedOn":"2016-08-01T11:35:43.620Z",
+                "loadStatus":"Inactive"
+            }
+    
+### Update a Load [PUT]
+Loads can be modified only by users with the `shipper` role and only when their status is `Inactive` or `Posted`
+
++ Request (application/json)
+
+        {
+            "loadName": "Water pipes",
+            "pickupNumber": 1,
+            "loadReference": "AJ-182377",
+            "rate": 430.00,
+            "origin": {"city":"Laredo", "state":"TX", "country", "USA", "zipcode":""},
+            "destination": {"city":"Dallas", "state":"TX", "country", "USA", "zipcode":""},
+            "borderCrossingAt":"Laredo, TX",
+            "commodity":"Water pipes",
+            "equipment type":"50' platform",
+            "fullOrPartial":"Full",
+            "weight": 1200,
+            "packages": 60,
+            "packageType":"Carton",
+            "length":"",
+            "width":"",
+            "height":"",
+            "pickupWindowStart":"2016-08-05T08:00:00.620Z",
+            "pickupWindowEnd":"2016-08-05T18:00:00.620Z",
+            "deliveryWindowStart":"2016-08-07T10:00:00.620Z",
+            "deliveryWindowEnd":"2016-08-05T17:00:00.620Z",
+        }
+
+
++ Response 200 (application/json)
+
+            {
+                "loadId": 2,
+                "shipperId": 1,
+                "carrierId": 0,
+                "loadName": "Water pipes",
+                "pickupNumber": 1,
+                "loadReference": "AJ-182377",
+                "rate": 430.00,
+                "origin": {"city":"Laredo", "state":"TX", "country", "USA", "zipcode":""},
+                "destination": {"city":"Dallas", "state":"TX", "country", "USA", "zipcode":""},
+                "borderCrossingAt":"Laredo, TX",
+                "commodity":"Water pipes",
+                "equipment type":"50' platform",
+                "fullOrPartial":"Full",
+                "weight": 1200,
+                "packages": 60,
+                "packageType":"Carton",
+                "length":"",
+                "width":"",
+                "height":"",
+                "pickupWindowStart":"2016-08-05T08:00:00.620Z",
+                "pickupWindowEnd":"2016-08-05T18:00:00.620Z",
+                "deliveryWindowStart":"2016-08-07T10:00:00.620Z",
+                "deliveryWindowEnd":"2016-08-05T17:00:00.620Z",
+                "postedOn":"2016-08-01T11:35:43.620Z",
+                "loadStatus":"Inactive"
+            }
+
+### Delete a Load [DELETE]
+Loads can be deleted only by users with the `shipper` role and only when their status is `Inactive` or `Posted`
+
++ Response 204
+
+## Load Status [/loads/{loadId}/{statusAction}{?access_token}]
+
++ Parameters
+    + loadId (number) - ID of the Load in the form of an integer
+    + statusAction (string) - An status changing action from this list: Post, Deactivate, Cancel, Take, Drop, Pickup, Deliver
+    + access_token (optional, string) ... JSON Web token 
+
+### Update a Load Status [PUT]
+Loads can change their status restricted by current status and user.  
+Only the owning shipper can use the following statusAction values: `Post`, `Deactivate`, `Cancel`  
+Only the assigned carrier can use the following statusAction values: `Drop`, `Pickup`, `Deliver`  
+Any carrier can use the `Take` statusAction value.
+
+The allowed changes depending on the current status are:
+
+`Inactive` => `Post`  
+`Posted` => `Deactivate`, `Cancel`, `Take`  
+`Taked` => `Drop`, `Pickup`  
+`InTransit` => `Drop`, `Deliver`  
+`Delivered` => None  
+`Cancelled` => None  
+
++ Response 200 (application/json)
+
+            {
+                "loadId": 2,
+                "shipperId": 1,
+                "carrierId": 0,
+                "loadName": "Water pipes",
+                "pickupNumber": 1,
+                "loadReference": "AJ-182377",
+                "rate": 430.00,
+                "origin": {"city":"Laredo", "state":"TX", "country", "USA", "zipcode":""},
+                "destination": {"city":"Dallas", "state":"TX", "country", "USA", "zipcode":""},
+                "borderCrossingAt":"Laredo, TX",
+                "commodity":"Water pipes",
+                "equipment type":"50' platform",
+                "fullOrPartial":"Full",
+                "weight": 1200,
+                "packages": 60,
+                "packageType":"Carton",
+                "length":"",
+                "width":"",
+                "height":"",
+                "pickupWindowStart":"2016-08-05T08:00:00.620Z",
+                "pickupWindowEnd":"2016-08-05T18:00:00.620Z",
+                "deliveryWindowStart":"2016-08-07T10:00:00.620Z",
+                "deliveryWindowEnd":"2016-08-05T17:00:00.620Z",
+                "postedOn":"2016-08-01T11:35:43.620Z",
+                "loadStatus":"Inactive"
+            }
+
+
+
+## Group Users
+## Users [/users{?access_token}]
+
++ Parameters
+    + access_token (optional, string) ... JSON Web token 
+
+### List users [GET]
+Get the list of Shippers, only user with the `admin` user role can access this resource
+
++ Response 200 (application/json)
+
+        [
+            {
+                "userId": 1,
+                "userName": "test",
+                "firstName": "test",
+                "lastName": "user",
+                "company": "Inotech"
+                "eMail": "info@inotech.mx",
+                "address": {
+                    "streetAddress1": "",
+                    "streetAddress2": "",
+                    "city": "",
+                    "state": "",
+                    "country": "",
+                    "zipcode": ""},
+                "phone": "(555) 555-1234",
+                "role": "shipper"
+            }
+        ]
+
+## Group Catalogs
+## EquipmentType [/equipmenttype{?access_token}]
+
++ Parameters
+    + access_token (optional, string) ... JSON Web token 
+
+### List equipment types [GET]
+Get the list of equipment types
+
++ Response 200 (application/json)
+
+        [
+            {
+                "equipmentTypeId": 1,
+                "name": "flatbed"
+            }
+        ]
+
+## Countries [/countries{?access_token}]
+
++ Parameters
+    + access_token (optional, string) ... JSON Web token 
+
+### List countries [GET]
+Get the list of countries
+
++ Response 200 (application/json)
+
+        [
+            {
+                "isoCode": "USA",
+                "name": "UNITED STATES OF AMERICA"
+            },
+            {
+                "isoCode": "CAN",
+                "name": "CANADA"
+            },
+            {
+                "isoCode": "MEX",
+                "name": "MEXICO"
+            }
+        ]
+
+
+## BorderCrossing [/bordercrossing{?access_token}]
+
++ Parameters
+    + access_token (optional, string) ... JSON Web token 
+
+### List BorderCrossing [GET]
+Get the list of border crossing locations
+
++ Response 200 (application/json)
+
+        [
+            {
+                "countryISOCode1": "USA",
+                "State1": "Texas",
+                "City1": "Laredo",
+                "countryISOCode2": "MEX",
+                "State2": "Tamaulipas",
+                "City2": "Nuevo Laredo"
+            }
+        ]
+
+## Package Types [/packagetypes{?access_token}]
+
++ Parameters
+    + access_token (optional, string) ... JSON Web token 
+
+### List Package Types [GET]
+Get the list of package types
+
++ Response 200 (application/json)
+
+        [
+            {
+                "id": 1,
+                "name": "Bag",
+            },
+            {
+                "id": 2,
+                "name": "Box",
+            },
+            {
+                "id": 3,
+                "name": "Carton/piece",
+            },
+            {
+                "id": 4,
+                "name": "Crate",
+            },
+            {
+                "id": 5,
+                "name": "Drum",
+            },
+            {
+                "id": 6,
+                "name": "Pallet/skid",
+            },
+            {
+                "id": 7,
+                "name": "Roll",
+            },
+            {
+                "id": 8,
+                "name": "Tube",
+            },
+        ]
+
+## Group Quotations
+
+## Quotation [/quotation{?equipment,oCountry,oZip,oState,oCity,oAddress,dCountry,dZip,dState,dCity,dAddress}{?access_token}]
+
++ Parameters
+    + equipment (required, string) ... Equipment type
+    + oCountry (required, string) ... Origin country code (USA, MEX, CAN)
+    + oZip (required, string) ... Origin Zip code
+    + oState (required, string) ... Origin state code
+    + oCity (required, string) ... Origin city name
+    + oAddress (optional, string) ... Origin street address
+    + dCountry (required, string) ... Destination country code (USA, MEX, CAN)
+    + dZip (required, string) ... Destination Zip code
+    + dState (required, string) ... Destination state code
+    + dCity (required, string) ... Destination city name
+    + dAddress (optional, string) ... Destination street address
+    + access_token (optional, string) ... JSON Web token 
+
+### Get quotation [GET]
+Get quotation for provided origin and destination
+
++ Response 200 (application/json)
+
+        {
+            "quotationId": "23200",
+            "equipment": "Tolva",
+            "oCountry": "USA",
+            "oZip": "78045",
+            "oState": "TX",
+            "oCity": "Laredo",
+            "oAddress": "8200 San Gabriel",
+            "dCountry": "USA",
+            "dZip": "30304",
+            "dState": "GA",
+            "dCity": "Atlanta",
+            "dAddress": "215 Lincoln st",
+            "ammount": "1200.00",
+            "mileage":"100",
+            "validFrom": "2016-08-05T00:00:00.620Z",
+            "validThru": "2016-08-10T18:00:00.620Z"
+        }
