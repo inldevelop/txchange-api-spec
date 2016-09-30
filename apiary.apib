@@ -116,6 +116,7 @@ taken and also the loads already taken by the carrier.
                 "loadId": 1,
                 "shipperId": 1,
                 "carrierId": 1,
+                "quotationId": 0,
                 "loadName": "Water pipes",
                 "pickupNumber": 1,
                 "loadReference": "AJ-182377",
@@ -153,6 +154,7 @@ Only users with the `shipper` role can call this action.
         {
             "loadId": 1,
             "shipperId": 1,
+            "quotationId": 0,
             "loadName": "Water pipes",
             "pickupNumber": 1,
             "loadReference": "AJ-182377",
@@ -188,6 +190,7 @@ Only users with the `shipper` role can call this action.
                 "loadId": 1,
                 "shipperId": 1,
                 "carrierId": 0,
+                "quotationId": 0,
                 "loadName": "Water pipes",
                 "pickupNumber": 1,
                 "loadReference": "AJ-182377",
@@ -226,6 +229,7 @@ Only users with the `shipper` role can call this action.
                 "loadId": 2,
                 "shipperId": 1,
                 "carrierId": 0,
+                "quotationId": 0,
                 "loadName": "Water pipes",
                 "pickupNumber": 1,
                 "loadReference": "AJ-182377",
@@ -284,13 +288,14 @@ Loads can be modified only by users with the `shipper` role and only when their 
             {
                 "loadId": 2,
                 "shipperId": 1,
+                "quotationId": 0,
                 "carrierId": 0,
                 "loadName": "Water pipes",
                 "pickupNumber": 1,
                 "loadReference": "AJ-182377",
                 "rate": 430.00,
-                "origin": {"city":"Laredo", "state":"TX", "country", "USA", "zipcode":""},
-                "destination": {"city":"Dallas", "state":"TX", "country", "USA", "zipcode":""},
+                "origin": {"city":"Laredo", "state":"TX", "country": "USA", "zipcode":""},
+                "destination": {"city":"Dallas", "state":"TX", "country": "USA", "zipcode":""},
                 "borderCrossingAt":"Laredo, TX",
                 "commodity":"Water pipes",
                 "equipment type":"50' platform",
@@ -511,10 +516,11 @@ Get the list of package types
 
 ## Group Quotations
 
-## Quotation [/quotation{?equipment,oCountry,oZip,oState,oCity,oAddress,dCountry,dZip,dState,dCity,dAddress}{?access_token}]
+## Quotation [/quotation{?equipment,commodity,oCountry,oZip,oState,oCity,oAddress,dCountry,dZip,dState,dCity,dAddress}{?access_token}]
 
 + Parameters
     + equipment (required, string) ... Equipment type
+    + commodity (required, string) ... Commodity
     + oCountry (required, string) ... Origin country code (USA, MEX, CAN)
     + oZip (required, string) ... Origin Zip code
     + oState (required, string) ... Origin state code
@@ -535,6 +541,7 @@ Get quotation for provided origin and destination
         {
             "quotationId": "23200",
             "equipment": "Tolva",
+            "commodity": "Corn",
             "oCountry": "USA",
             "oZip": "78045",
             "oState": "TX",
