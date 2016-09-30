@@ -101,7 +101,7 @@ Disconnect user and invalidate access token
 The loads listed are dependent on the user type and parameters.  
 + Users with the `shipper` role get listed only the loads belonging to them.  
 + Users with the `carrier` role get listed all the active posted loads available to be 
-taken and also the loads already taken by the shipper.
+taken and also the loads already taken by the carrier.
 
 + Parameters
     + status (optional, string) ... Is any of the following: `Inactive`, `Posted`, `Taken`, `InTransit`, `Delivered`, `Cancelled` also you can use the next pseudo-statuses: `All` (All statuses), `Active` (Includes `Posted`, `Taken`, `InTransit`), `Assigned` (Includes `Taken`, `InTransit`). Default `Active`.
