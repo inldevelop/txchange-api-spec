@@ -36,7 +36,7 @@ bring all the loads posted by a user with `shipper` role or the load taken by a 
 + destination (string) - The city, state (or Zip code) and country the merchandise must be delivered to
 + borderCrossingAt (string) - The city and state where the load will leave the country. Used when the origin and destination countries are not the same.
 + commodity (string) - Description of merchandise being included in this load
-+ equipmentType (string) - The type of equipment required
++ equipment (string) - The type of equipment required
 + ftl (string) - Identifies if this load requires a dedicated equipment ("FTL") or can share equipment with other loads ("LTL")
 + weight (number) - Weight of the load expressed in pounds.
 + packages (number) - Qty of packages
@@ -134,7 +134,7 @@ taken and also the loads already taken by the carrier.
                 "destination": {"city":"Dallas", "state":"TX", "country", "USA", "zipcode":""},
                 "borderCrossingAt":"Laredo, TX",
                 "commodity":"Water pipes",
-                "equipment type":"50' platform",
+                "equipment":"FLATBED",
                 "fullOrPartial":"Full",
                 "weight": 1200,
                 "packages": 60,
@@ -178,7 +178,7 @@ Only users with the `shipper` role can call this action.
                 "destination": {"city":"Dallas", "state":"TX", "country", "USA", "zipcode":""},
                 "borderCrossingAt":"Laredo, TX",
                 "commodity":"Water pipes",
-                "equipment type":"50' platform",
+                "equipment":"FLATBED",
                 "fullOrPartial":"Full",
                 "weight": 1200,
                 "packages": 60,
@@ -216,7 +216,7 @@ Only users with the `shipper` role can call this action.
                 "destination": {"city":"Dallas", "state":"TX", "country", "USA", "zipcode":""},
                 "borderCrossingAt":"Laredo, TX",
                 "commodity":"Water pipes",
-                "equipment type":"50' platform",
+                "equipment":"FLATBED",
                 "fullOrPartial":"Full",
                 "weight": 1200,
                 "packages": 60,
@@ -261,7 +261,7 @@ Only users with the `shipper` role can call this action.
                 "destination": {"city":"Dallas", "state":"TX", "country", "USA", "zipcode":""},
                 "borderCrossingAt":"Laredo, TX",
                 "commodity":"Water pipes",
-                "equipmentType":"50' platform",
+                "equipment":"FLATBED",
                 "fullOrPartial":"Full",
                 "weight": 1200,
                 "packages": 60,
@@ -299,7 +299,7 @@ Loads can be modified only by users with the `shipper` role and only when their 
                 "destination": {"city":"Dallas", "state":"TX", "country", "USA", "zipcode":""},
                 "borderCrossingAt":"Laredo, TX",
                 "commodity":"Water pipes",
-                "equipment type":"50' platform",
+                "equipment":"FLATBED",
                 "fullOrPartial":"Full",
                 "weight": 1200,
                 "packages": 60,
@@ -331,7 +331,7 @@ Loads can be modified only by users with the `shipper` role and only when their 
                 "destination": {"city":"Dallas", "state":"TX", "country": "USA", "zipcode":""},
                 "borderCrossingAt":"Laredo, TX",
                 "commodity":"Water pipes",
-                "equipment type":"50' platform",
+                "equipment":"FLATBED",
                 "fullOrPartial":"Full",
                 "weight": 1200,
                 "packages": 60,
@@ -394,7 +394,7 @@ The allowed changes depending on the current status are:
                 "destination": {"city":"Dallas", "state":"TX", "country", "USA", "zipcode":""},
                 "borderCrossingAt":"Laredo, TX",
                 "commodity":"Water pipes",
-                "equipment type":"50' platform",
+                "equipment":"FLATBED",
                 "fullOrPartial":"Full",
                 "weight": 1200,
                 "packages": 60,
@@ -566,7 +566,7 @@ Get the list of border crossing locations
 
 ## Group Quotations
 
-## Quotation [/quotation{?equipment,commodity,oCountry,oZip,oState,oCity,oAddress,dCountry,dZip,dState,dCity,dAddress}]
+## Quotation [/quotation{?equipment,commodity,oCountry,oZip,oState,oCity,oAddress,dCountry,dZip,dState,dCity,dAddress,customerId}]
 
 + Parameters
     + equipment (required, string) ... Equipment type
@@ -581,6 +581,7 @@ Get the list of border crossing locations
     + dState (required, string) ... Destination state code
     + dCity (required, string) ... Destination city name
     + dAddress (optional, string) ... Destination street address
+    + customerId (required, string) ... WARNING! This parameter is temporary, right now is required, send 115 for testing purposes, in the near future this parameters would be ignored
 
 ### Get quotation [GET]
 Get quotation for provided origin and destination
