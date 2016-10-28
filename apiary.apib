@@ -1,5 +1,5 @@
 FORMAT: 1A
-HOST: http://txchange.apiary.io/api/v1
+HOST: https://sandbox-txchange.herokuapp.com/
 
 # txchange
 
@@ -70,12 +70,14 @@ bring all the loads posted by a user with `shipper` role or the load taken by a 
 ### Login [GET]
 Authenticate user and generate new access token 
 
-+ Request (application/json)
++ Request
 
-        {
-            "userName"="test",
-            "pwd"="testpwd"
-        }
+    + Body
+
+            {
+                "userName"="test",
+                "pwd"="testpwd"
+            }
         
 + Response 200 (application/json)
 
@@ -83,11 +85,14 @@ Authenticate user and generate new access token
             "access_token":"dflkjhgsldkjfgh.sdfkljghls.dsfklghjslk"
         }
 
-## Logout [/logout{?access_token}]
+## Logout [/logout]
 Disconnect user and invalidate access token
 
-+ Parameters
-    + access_token (required, string) ... JSON Web token 
++ Request
+    + Headers
+    
+            Authorization: Bearer <access_token>
+
 
 ### Logout [GET]
 
@@ -95,7 +100,7 @@ Disconnect user and invalidate access token
 
 
 ## Group Loads
-## Loads [/loads{?status,postedDatePeriod}{?access_token}]
+## Loads [/loads{?status}{?startDate,finishDate}]
 
 ### List Loads [GET]
 The loads listed are dependent on the user type and parameters.  
@@ -105,9 +110,13 @@ taken and also the loads already taken by the carrier.
 
 + Parameters
     + status (optional, string) ... Is any of the following: `Inactive`, `Posted`, `Taken`, `InTransit`, `Delivered`, `Cancelled` also you can use the next pseudo-statuses: `All` (All statuses), `Active` (Includes `Posted`, `Taken`, `InTransit`), `Assigned` (Includes `Taken`, `InTransit`). Default `Active`.
-    + postedDatePeriod (optional, string) ... Required if status is `All` or `Delivered`. Examples: "20160501-","20160501-20160630" 
-    + access_token (optional, string) ... JSON Web token 
+    + startDate (optional, string) ... Required if status is `All` or `Delivered`. Examples: "20160501" 
+    + finishDate (optional, string) ... Required if status is `All` or `Delivered`. Examples: "20160501-20160630" 
 
++ Request
+    + Headers
+    
+            Authorization: Bearer <access_token>
 
 + Response 200 (application/json)
 
@@ -133,6 +142,8 @@ taken and also the loads already taken by the carrier.
                 "length":"",
                 "width":"",
                 "height":"",
+                "measureUnit": "cm"
+                "eta": "2000-00-00T00:00:00.620Z"
                 "pickupWindowStart":"2016-08-05T08:00:00.620Z",
                 "pickupWindowEnd":"2016-08-05T18:00:00.620Z",
                 "deliveryWindowStart":"2016-08-07T10:00:00.620Z",
@@ -146,37 +157,43 @@ taken and also the loads already taken by the carrier.
 Create a new load. A new load can be created with `Inactive` or `Posted` status.  
 Only users with the `shipper` role can call this action.
 
-+ Parameters
-    + access_token (optional, string) ... JSON Web token 
 
-+ Request (application/json)
-
-        {
-            "loadId": 1,
-            "shipperId": 1,
-            "quotationId": 0,
-            "loadName": "Water pipes",
-            "pickupNumber": 1,
-            "loadReference": "AJ-182377",
-            "rate": 430.00,
-            "origin": {"city":"Laredo", "state":"TX", "country", "USA", "zipcode":""},
-            "destination": {"city":"Dallas", "state":"TX", "country", "USA", "zipcode":""},
-            "borderCrossingAt":"Laredo, TX",
-            "commodity":"Water pipes",
-            "equipment type":"50' platform",
-            "fullOrPartial":"Full",
-            "weight": 1200,
-            "packages": 60,
-            "packageType":"Carton",
-            "length":"",
-            "width":"",
-            "height":"",
-            "pickupWindowStart":"2016-08-05T08:00:00.620Z",
-            "pickupWindowEnd":"2016-08-05T18:00:00.620Z",
-            "deliveryWindowStart":"2016-08-07T10:00:00.620Z",
-            "deliveryWindowEnd":"2016-08-05T17:00:00.620Z",
-            "loadStatus":"Inactive"
-        }
++ Request
+    + Headers
+    
+            Authorization: Bearer <access_token>
+            Content-Type: application/json
+            
+    + Body
+    
+            {
+                "loadId": 1,
+                "shipperId": 1,
+                "quotationId": 0,
+                "loadName": "Water pipes",
+                "pickupNumber": 1,
+                "loadReference": "AJ-182377",
+                "rate": 430.00,
+                "origin": {"city":"Laredo", "state":"TX", "country", "USA", "zipcode":""},
+                "destination": {"city":"Dallas", "state":"TX", "country", "USA", "zipcode":""},
+                "borderCrossingAt":"Laredo, TX",
+                "commodity":"Water pipes",
+                "equipment type":"50' platform",
+                "fullOrPartial":"Full",
+                "weight": 1200,
+                "packages": 60,
+                "packageType":"Carton",
+                "length":"",
+                "width":"",
+                "height":"",
+                "measureUnit": "cm"
+                "eta": "2000-00-00T00:00:00.620Z"
+                "pickupWindowStart":"2016-08-05T08:00:00.620Z",
+                "pickupWindowEnd":"2016-08-05T18:00:00.620Z",
+                "deliveryWindowStart":"2016-08-07T10:00:00.620Z",
+                "deliveryWindowEnd":"2016-08-05T17:00:00.620Z",
+                "loadStatus":"Inactive"
+            }
 
 + Response 201 (application/json)
 
@@ -207,6 +224,8 @@ Only users with the `shipper` role can call this action.
                 "length":"",
                 "width":"",
                 "height":"",
+                "measureUnit": "cm"
+                "eta": "2000-00-00T00:00:00.620Z"
                 "pickupWindowStart":"2016-08-05T08:00:00.620Z",
                 "pickupWindowEnd":"2016-08-05T18:00:00.620Z",
                 "deliveryWindowStart":"2016-08-07T10:00:00.620Z",
@@ -215,13 +234,17 @@ Only users with the `shipper` role can call this action.
                 "loadStatus":"Inactive"
             }
 
-## Load [/loads/{load_id}{?access_token}]
+## Load [/loads/{loadId}]
 
 + Parameters
-    + load_id (number) - ID of the Load in the form of an integer
-    + access_token (optional, string) ... JSON Web token 
+    + loadId (number) - ID of the Load in the form of an integer
 
 ### Get Load Detail [GET]
+
++ Request
+    + Headers
+    
+            Authorization: Bearer <access_token>
 
 + Response 200 (application/json)
 
@@ -238,7 +261,7 @@ Only users with the `shipper` role can call this action.
                 "destination": {"city":"Dallas", "state":"TX", "country", "USA", "zipcode":""},
                 "borderCrossingAt":"Laredo, TX",
                 "commodity":"Water pipes",
-                "equipment type":"50' platform",
+                "equipmentType":"50' platform",
                 "fullOrPartial":"Full",
                 "weight": 1200,
                 "packages": 60,
@@ -246,6 +269,8 @@ Only users with the `shipper` role can call this action.
                 "length":"",
                 "width":"",
                 "height":"",
+                "measureUnit": "cm"
+                "eta": "2000-00-00T00:00:00.620Z"
                 "pickupWindowStart":"2016-08-05T08:00:00.620Z",
                 "pickupWindowEnd":"2016-08-05T18:00:00.620Z",
                 "deliveryWindowStart":"2016-08-07T10:00:00.620Z",
@@ -257,30 +282,38 @@ Only users with the `shipper` role can call this action.
 ### Update a Load [PUT]
 Loads can be modified only by users with the `shipper` role and only when their status is `Inactive` or `Posted`
 
-+ Request (application/json)
-
-        {
-            "loadName": "Water pipes",
-            "pickupNumber": 1,
-            "loadReference": "AJ-182377",
-            "rate": 430.00,
-            "origin": {"city":"Laredo", "state":"TX", "country", "USA", "zipcode":""},
-            "destination": {"city":"Dallas", "state":"TX", "country", "USA", "zipcode":""},
-            "borderCrossingAt":"Laredo, TX",
-            "commodity":"Water pipes",
-            "equipment type":"50' platform",
-            "fullOrPartial":"Full",
-            "weight": 1200,
-            "packages": 60,
-            "packageType":"Carton",
-            "length":"",
-            "width":"",
-            "height":"",
-            "pickupWindowStart":"2016-08-05T08:00:00.620Z",
-            "pickupWindowEnd":"2016-08-05T18:00:00.620Z",
-            "deliveryWindowStart":"2016-08-07T10:00:00.620Z",
-            "deliveryWindowEnd":"2016-08-05T17:00:00.620Z",
-        }
++ Request
+    + Headers
+    
+            Authorization: Bearer <access_token>
+            Content-Type: application/json
+            
+    + Body
+    
+            {
+                "loadName": "Water pipes",
+                "pickupNumber": 1,
+                "loadReference": "AJ-182377",
+                "rate": 430.00,
+                "origin": {"city":"Laredo", "state":"TX", "country", "USA", "zipcode":""},
+                "destination": {"city":"Dallas", "state":"TX", "country", "USA", "zipcode":""},
+                "borderCrossingAt":"Laredo, TX",
+                "commodity":"Water pipes",
+                "equipment type":"50' platform",
+                "fullOrPartial":"Full",
+                "weight": 1200,
+                "packages": 60,
+                "packageType":"Carton",
+                "length":"",
+                "width":"",
+                "height":"",
+                "measureUnit": "cm"
+                "eta": "2000-00-00T00:00:00.620Z"
+                "pickupWindowStart":"2016-08-05T08:00:00.620Z",
+                "pickupWindowEnd":"2016-08-05T18:00:00.620Z",
+                "deliveryWindowStart":"2016-08-07T10:00:00.620Z",
+                "deliveryWindowEnd":"2016-08-05T17:00:00.620Z",
+            }
 
 
 + Response 200 (application/json)
@@ -306,6 +339,8 @@ Loads can be modified only by users with the `shipper` role and only when their 
                 "length":"",
                 "width":"",
                 "height":"",
+                "measureUnit": "cm"
+                "eta": "2000-00-00T00:00:00.620Z"
                 "pickupWindowStart":"2016-08-05T08:00:00.620Z",
                 "pickupWindowEnd":"2016-08-05T18:00:00.620Z",
                 "deliveryWindowStart":"2016-08-07T10:00:00.620Z",
@@ -319,12 +354,11 @@ Loads can be deleted only by users with the `shipper` role and only when their s
 
 + Response 204
 
-## Load Status [/loads/{loadId}/{statusAction}{?access_token}]
+## Load Status [/loads/{loadId}/{statusAction}]
 
 + Parameters
     + loadId (number) - ID of the Load in the form of an integer
     + statusAction (string) - An status changing action from this list: Post, Deactivate, Cancel, Take, Drop, Pickup, Deliver
-    + access_token (optional, string) ... JSON Web token 
 
 ### Update a Load Status [PUT]
 Loads can change their status restricted by current status and user.  
@@ -340,6 +374,11 @@ The allowed changes depending on the current status are:
 `InTransit` => `Drop`, `Deliver`  
 `Delivered` => None  
 `Cancelled` => None  
+
++ Request
+    + Headers
+    
+            Authorization: Bearer <access_token>
 
 + Response 200 (application/json)
 
@@ -363,6 +402,8 @@ The allowed changes depending on the current status are:
                 "length":"",
                 "width":"",
                 "height":"",
+                "measureUnit": "cm"
+                "eta": "2000-00-00T00:00:00.620Z"
                 "pickupWindowStart":"2016-08-05T08:00:00.620Z",
                 "pickupWindowEnd":"2016-08-05T18:00:00.620Z",
                 "deliveryWindowStart":"2016-08-07T10:00:00.620Z",
@@ -374,13 +415,15 @@ The allowed changes depending on the current status are:
 
 
 ## Group Users
-## Users [/users{?access_token}]
-
-+ Parameters
-    + access_token (optional, string) ... JSON Web token 
+## Users [/users]
 
 ### List users [GET]
 Get the list of Shippers, only user with the `admin` user role can access this resource
+
++ Request
+    + Headers
+    
+            Authorization: Bearer <access_token>
 
 + Response 200 (application/json)
 
@@ -405,13 +448,15 @@ Get the list of Shippers, only user with the `admin` user role can access this r
         ]
 
 ## Group Catalogs
-## EquipmentType [/equipmenttype{?access_token}]
-
-+ Parameters
-    + access_token (optional, string) ... JSON Web token 
+## EquipmentType [/equipmenttype]
 
 ### List equipment types [GET]
 Get the list of equipment types
+
++ Request
+    + Headers
+    
+            Authorization: Bearer <access_token>
 
 + Response 200 (application/json)
 
@@ -422,13 +467,15 @@ Get the list of equipment types
             }
         ]
 
-## Countries [/countries{?access_token}]
-
-+ Parameters
-    + access_token (optional, string) ... JSON Web token 
+## Countries [/countries]
 
 ### List countries [GET]
 Get the list of countries
+
++ Request
+    + Headers
+    
+            Authorization: Bearer <access_token>
 
 + Response 200 (application/json)
 
@@ -448,13 +495,15 @@ Get the list of countries
         ]
 
 
-## BorderCrossing [/bordercrossing{?access_token}]
-
-+ Parameters
-    + access_token (optional, string) ... JSON Web token 
+## BorderCrossing [/bordercrossing]
 
 ### List BorderCrossing [GET]
 Get the list of border crossing locations
+
++ Request
+    + Headers
+    
+            Authorization: Bearer <access_token>
 
 + Response 200 (application/json)
 
@@ -469,13 +518,14 @@ Get the list of border crossing locations
             }
         ]
 
-## Package Types [/packagetypes{?access_token}]
+## Package Types [/packagetypes]
 
-+ Parameters
-    + access_token (optional, string) ... JSON Web token 
+### List Package Typeslist of package types
 
-### List Package Types [GET]
-Get the list of package types
++ Request
+    + Headers
+    
+            Authorization: Bearer <access_token>
 
 + Response 200 (application/json)
 
@@ -516,7 +566,7 @@ Get the list of package types
 
 ## Group Quotations
 
-## Quotation [/quotation{?equipment,commodity,oCountry,oZip,oState,oCity,oAddress,dCountry,dZip,dState,dCity,dAddress}{?access_token}]
+## Quotation [/quotation{?equipment,commodity,oCountry,oZip,oState,oCity,oAddress,dCountry,dZip,dState,dCity,dAddress}]
 
 + Parameters
     + equipment (required, string) ... Equipment type
@@ -531,10 +581,14 @@ Get the list of package types
     + dState (required, string) ... Destination state code
     + dCity (required, string) ... Destination city name
     + dAddress (optional, string) ... Destination street address
-    + access_token (optional, string) ... JSON Web token 
 
 ### Get quotation [GET]
 Get quotation for provided origin and destination
+
++ Request
+    + Headers
+    
+            Authorization: Bearer <access_token>
 
 + Response 200 (application/json)
 
@@ -555,5 +609,9 @@ Get quotation for provided origin and destination
             "ammount": "1200.00",
             "mileage":"100",
             "validFrom": "2016-08-05T00:00:00.620Z",
-            "validThru": "2016-08-10T18:00:00.620Z"
+            "validThru": "2016-08-10T18:00:00.620Z",
+            "rateId": "90791c5f-5ab9-4622-ba8d-c975ca6665aa",
+            "customerExclusive": true,
+            "isMinimumRate": false,
+            "minimumRate": 100.00
         }
