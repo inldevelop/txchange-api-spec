@@ -139,9 +139,9 @@ taken and also the loads already taken by the carrier.
                 "weight": 1200,
                 "packages": 60,
                 "packageType":"Carton",
-                "length":"",
-                "width":"",
-                "height":"",
+                "length":"0",
+                "width":"0",
+                "height":"0",
                 "measureUnit": "cm"
                 "eta": "2000-00-00T00:00:00.620Z"
                 "pickupWindowStart":"2016-08-05T08:00:00.620Z",
@@ -167,15 +167,15 @@ Only users with the `shipper` role can call this action.
     + Body
     
             {
-                "loadId": 1,
-                "shipperId": 1,
+                "loadId": 0,
+                "shipperId": 0,
                 "quotationId": 0,
                 "loadName": "Water pipes",
                 "pickupNumber": 1,
                 "loadReference": "AJ-182377",
                 "rate": 430.00,
-                "origin": {"city":"Laredo", "state":"TX", "country", "USA", "zipcode":""},
-                "destination": {"city":"Dallas", "state":"TX", "country", "USA", "zipcode":""},
+                "origin": {"city":"Laredo", "state":"TX", "country":"USA", "zipcode":"", "streetAddress":""},
+                "destination": {"city":"Dallas", "state":"TX", "country":"USA", "zipcode":"", "streetAddress":""},
                 "borderCrossingAt":"Laredo, TX",
                 "commodity":"Water pipes",
                 "equipment":"FLATBED",
@@ -183,11 +183,11 @@ Only users with the `shipper` role can call this action.
                 "weight": 1200,
                 "packages": 60,
                 "packageType":"Carton",
-                "length":"",
-                "width":"",
-                "height":"",
-                "measureUnit": "cm"
-                "eta": "2000-00-00T00:00:00.620Z"
+                "length":"0",
+                "width":"0",
+                "height":"0",
+                "measureUnit": "cm",
+                "eta": "2000-00-00T00:00:00.620Z",
                 "pickupWindowStart":"2016-08-05T08:00:00.620Z",
                 "pickupWindowEnd":"2016-08-05T18:00:00.620Z",
                 "deliveryWindowStart":"2016-08-07T10:00:00.620Z",
@@ -212,25 +212,25 @@ Only users with the `shipper` role can call this action.
                 "pickupNumber": 1,
                 "loadReference": "AJ-182377",
                 "rate": 430.00,
-                "origin": {"city":"Laredo", "state":"TX", "country", "USA", "zipcode":""},
-                "destination": {"city":"Dallas", "state":"TX", "country", "USA", "zipcode":""},
+                "origin": {"city":"Laredo", "state":"TX", "country", "USA", "zipcode":"", "streetAddress":""},
+                "destination": {"city":"Dallas", "state":"TX", "country", "USA", "zipcode":"", "streetAddress":""},
                 "borderCrossingAt":"Laredo, TX",
                 "commodity":"Water pipes",
-                "equipment":"FLATBED",
+                "equipment":"HOPPER",
                 "fullOrPartial":"Full",
                 "weight": 1200,
                 "packages": 60,
                 "packageType":"Carton",
-                "length":"",
-                "width":"",
-                "height":"",
-                "measureUnit": "cm"
-                "eta": "2000-00-00T00:00:00.620Z"
-                "pickupWindowStart":"2016-08-05T08:00:00.620Z",
-                "pickupWindowEnd":"2016-08-05T18:00:00.620Z",
-                "deliveryWindowStart":"2016-08-07T10:00:00.620Z",
-                "deliveryWindowEnd":"2016-08-05T17:00:00.620Z",
-                "postedOn":"2016-08-01T11:35:43.620Z",
+                "length":"0",
+                "width":"0",
+                "height":"0",
+                "measureUnit": "cm",
+                "eta": "2016-12-10T00:00:00.620Z",
+                "pickupWindowStart":"2016-12-02T08:00:00.620Z",
+                "pickupWindowEnd":"2016-12-05T18:00:00.620Z",
+                "deliveryWindowStart":"2016-12-06T10:00:00.620Z",
+                "deliveryWindowEnd":"2016-12-10T17:00:00.620Z",
+                "postedOn":"2016-10-31T11:35:43.620Z",
                 "loadStatus":"Inactive"
             }
 
@@ -257,8 +257,8 @@ Only users with the `shipper` role can call this action.
                 "pickupNumber": 1,
                 "loadReference": "AJ-182377",
                 "rate": 430.00,
-                "origin": {"city":"Laredo", "state":"TX", "country", "USA", "zipcode":""},
-                "destination": {"city":"Dallas", "state":"TX", "country", "USA", "zipcode":""},
+                "origin": {"city":"Laredo", "state":"TX", "country", "USA", "zipcode":"", "streetAddress":""},
+                "destination": {"city":"Dallas", "state":"TX", "country", "USA", "zipcode":"", "streetAddress":""},
                 "borderCrossingAt":"Laredo, TX",
                 "commodity":"Water pipes",
                 "equipment":"FLATBED",
@@ -266,11 +266,11 @@ Only users with the `shipper` role can call this action.
                 "weight": 1200,
                 "packages": 60,
                 "packageType":"Carton",
-                "length":"",
-                "width":"",
-                "height":"",
-                "measureUnit": "cm"
-                "eta": "2000-00-00T00:00:00.620Z"
+                "length":"0",
+                "width":"0",
+                "height":"0",
+                "measureUnit": "cm",
+                "eta": "2000-00-00T00:00:00.620Z",
                 "pickupWindowStart":"2016-08-05T08:00:00.620Z",
                 "pickupWindowEnd":"2016-08-05T18:00:00.620Z",
                 "deliveryWindowStart":"2016-08-07T10:00:00.620Z",
@@ -295,8 +295,8 @@ Loads can be modified only by users with the `shipper` role and only when their 
                 "pickupNumber": 1,
                 "loadReference": "AJ-182377",
                 "rate": 430.00,
-                "origin": {"city":"Laredo", "state":"TX", "country", "USA", "zipcode":""},
-                "destination": {"city":"Dallas", "state":"TX", "country", "USA", "zipcode":""},
+                "origin": {"city":"Laredo", "state":"TX", "country", "USA", "zipcode":"", "streetAddress":""},
+                "destination": {"city":"Dallas", "state":"TX", "country", "USA", "zipcode":"", "streetAddress":""},
                 "borderCrossingAt":"Laredo, TX",
                 "commodity":"Water pipes",
                 "equipment":"FLATBED",
@@ -304,11 +304,11 @@ Loads can be modified only by users with the `shipper` role and only when their 
                 "weight": 1200,
                 "packages": 60,
                 "packageType":"Carton",
-                "length":"",
-                "width":"",
-                "height":"",
-                "measureUnit": "cm"
-                "eta": "2000-00-00T00:00:00.620Z"
+                "length":"0",
+                "width":"0",
+                "height":"0",
+                "measureUnit": "cm",
+                "eta": "2000-00-00T00:00:00.620Z",
                 "pickupWindowStart":"2016-08-05T08:00:00.620Z",
                 "pickupWindowEnd":"2016-08-05T18:00:00.620Z",
                 "deliveryWindowStart":"2016-08-07T10:00:00.620Z",
@@ -327,8 +327,8 @@ Loads can be modified only by users with the `shipper` role and only when their 
                 "pickupNumber": 1,
                 "loadReference": "AJ-182377",
                 "rate": 430.00,
-                "origin": {"city":"Laredo", "state":"TX", "country": "USA", "zipcode":""},
-                "destination": {"city":"Dallas", "state":"TX", "country": "USA", "zipcode":""},
+                "origin": {"city":"Laredo", "state":"TX", "country": "USA", "zipcode":"", "streetAddress":""},
+                "destination": {"city":"Dallas", "state":"TX", "country": "USA", "zipcode":"", "streetAddress":""},
                 "borderCrossingAt":"Laredo, TX",
                 "commodity":"Water pipes",
                 "equipment":"FLATBED",
@@ -336,11 +336,11 @@ Loads can be modified only by users with the `shipper` role and only when their 
                 "weight": 1200,
                 "packages": 60,
                 "packageType":"Carton",
-                "length":"",
-                "width":"",
-                "height":"",
-                "measureUnit": "cm"
-                "eta": "2000-00-00T00:00:00.620Z"
+                "length":"0",
+                "width":"0",
+                "height":"0",
+                "measureUnit": "cm",
+                "eta": "2000-00-00T00:00:00.620Z",
                 "pickupWindowStart":"2016-08-05T08:00:00.620Z",
                 "pickupWindowEnd":"2016-08-05T18:00:00.620Z",
                 "deliveryWindowStart":"2016-08-07T10:00:00.620Z",
@@ -390,8 +390,8 @@ The allowed changes depending on the current status are:
                 "pickupNumber": 1,
                 "loadReference": "AJ-182377",
                 "rate": 430.00,
-                "origin": {"city":"Laredo", "state":"TX", "country", "USA", "zipcode":""},
-                "destination": {"city":"Dallas", "state":"TX", "country", "USA", "zipcode":""},
+                "origin": {"city":"Laredo", "state":"TX", "country", "USA", "zipcode":"", "streetAddress":""},
+                "destination": {"city":"Dallas", "state":"TX", "country", "USA", "zipcode":"", "streetAddress":""},
                 "borderCrossingAt":"Laredo, TX",
                 "commodity":"Water pipes",
                 "equipment":"FLATBED",
@@ -399,11 +399,11 @@ The allowed changes depending on the current status are:
                 "weight": 1200,
                 "packages": 60,
                 "packageType":"Carton",
-                "length":"",
-                "width":"",
-                "height":"",
-                "measureUnit": "cm"
-                "eta": "2000-00-00T00:00:00.620Z"
+                "length":"0",
+                "width":"0",
+                "height":"0",
+                "measureUnit": "cm",
+                "eta": "2000-00-00T00:00:00.620Z",
                 "pickupWindowStart":"2016-08-05T08:00:00.620Z",
                 "pickupWindowEnd":"2016-08-05T18:00:00.620Z",
                 "deliveryWindowStart":"2016-08-07T10:00:00.620Z",
@@ -569,7 +569,7 @@ Get the list of border crossing locations
 ## Quotation [/quotation{?equipment,commodity,oCountry,oZip,oState,oCity,oAddress,dCountry,dZip,dState,dCity,dAddress,customerId}]
 
 + Parameters
-    + equipment (required, string) ... Equipment type
+    + equipment (required, string) ... Equipment type code
     + commodity (required, string) ... Commodity
     + oCountry (required, string) ... Origin country code (USA, MEX, CAN)
     + oZip (required, string) ... Origin Zip code
@@ -595,7 +595,7 @@ Get quotation for provided origin and destination
 
         {
             "quotationId": "23200",
-            "equipment": "Tolva",
+            "equipment": "HOPPER",
             "commodity": "Corn",
             "oCountry": "USA",
             "oZip": "78045",
@@ -614,5 +614,6 @@ Get quotation for provided origin and destination
             "rateId": "90791c5f-5ab9-4622-ba8d-c975ca6665aa",
             "customerExclusive": true,
             "isMinimumRate": false,
-            "minimumRate": 100.00
+            "minimumRate": 100.00,
+            "rateOriginId": 7
         }
