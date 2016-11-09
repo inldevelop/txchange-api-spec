@@ -44,6 +44,11 @@ bring all the loads posted by a user with `shipper` role or the load taken by a 
 + length (number) - Length occupied in the equipment by the load, zero means legal length (i.e.: Non oversize)
 + width (number) - Width occupied in the equipment by the load, zero means legal dimension (i.e.: Non oversize)
 + height (number) - Height occupied in the equipment by the load, zero means legal dimension (i.e.: Non oversize)
++ measureUnit (string) - Can be "cm", "m", "inch", "foot"
++ estimatedTimeOfArrival (string) - Estimated date and time of arrival to destination,
++ realTimeOfArrival (string) - Real date and time when the cargo arrived to destination,
++ estimatedPickupDate (string) - Estimated date and time of cargo pickup,
++ realPickupDate (string) - Real date and time of cargo pickup,
 + pickupWindowStart (string) - What is the earliest date & time the carrier can arrive at origin to pickup the load
 + pickupWindowEnd (string) - What is the latest date & time the carrier can arrive to pickup the load
 + deliveryWindowStart (string) - What is the earliest date & time the carrier can arrive at destination to deliver the load
@@ -143,7 +148,10 @@ taken and also the loads already taken by the carrier.
                 "width":"0",
                 "height":"0",
                 "measureUnit": "cm"
-                "eta": "2000-00-00T00:00:00.620Z"
+                "estimatedTimeOfArrival": "2016-12-10T00:00:00.620Z",
+                "realTimeOfArrival": "2016-12-10T00:00:00.620Z",
+                "estimatedPickupDate": "2016-12-02T00:00:00.620Z",
+                "realPickupDate": "2016-12-02T00:00:00.620Z",
                 "pickupWindowStart":"2016-08-05T08:00:00.620Z",
                 "pickupWindowEnd":"2016-08-05T18:00:00.620Z",
                 "deliveryWindowStart":"2016-08-07T10:00:00.620Z",
@@ -181,13 +189,17 @@ Only users with the `shipper` role can call this action.
                 "equipment":"FLATBED",
                 "fullOrPartial":"Full",
                 "weight": 1200,
+                "density": 0.00,
                 "packages": 60,
                 "packageType":"Carton",
                 "length":"0",
                 "width":"0",
                 "height":"0",
                 "measureUnit": "cm",
-                "eta": "2000-00-00T00:00:00.620Z",
+                "estimatedTimeOfArrival": "2016-12-10T00:00:00.620Z",
+                "realTimeOfArrival": "2016-12-10T00:00:00.620Z",
+                "estimatedPickupDate": "2016-12-02T00:00:00.620Z",
+                "realPickupDate": "2016-12-02T00:00:00.620Z",
                 "pickupWindowStart":"2016-08-05T08:00:00.620Z",
                 "pickupWindowEnd":"2016-08-05T18:00:00.620Z",
                 "deliveryWindowStart":"2016-08-07T10:00:00.620Z",
@@ -219,13 +231,17 @@ Only users with the `shipper` role can call this action.
                 "equipment":"HOPPER",
                 "fullOrPartial":"Full",
                 "weight": 1200,
+                "density": 0.00,
                 "packages": 60,
                 "packageType":"Carton",
                 "length":"0",
                 "width":"0",
                 "height":"0",
                 "measureUnit": "cm",
-                "eta": "2016-12-10T00:00:00.620Z",
+                "estimatedTimeOfArrival": "2016-12-10T00:00:00.620Z",
+                "realTimeOfArrival": "2016-12-10T00:00:00.620Z",
+                "estimatedPickupDate": "2016-12-02T00:00:00.620Z",
+                "realPickupDate": "2016-12-02T00:00:00.620Z",
                 "pickupWindowStart":"2016-12-02T08:00:00.620Z",
                 "pickupWindowEnd":"2016-12-05T18:00:00.620Z",
                 "deliveryWindowStart":"2016-12-06T10:00:00.620Z",
@@ -264,13 +280,17 @@ Only users with the `shipper` role can call this action.
                 "equipment":"FLATBED",
                 "fullOrPartial":"Full",
                 "weight": 1200,
+                "density": 0.00,
                 "packages": 60,
                 "packageType":"Carton",
                 "length":"0",
                 "width":"0",
                 "height":"0",
                 "measureUnit": "cm",
-                "eta": "2000-00-00T00:00:00.620Z",
+                "estimatedTimeOfArrival": "2000-00-00T00:00:00.620Z",
+                "realTimeOfArrival": "2000-00-00T00:00:00.620Z",
+                "estimatedPickupDate": "2000-00-00T00:00:00.620Z",
+                "realPickupDate": "2000-00-00T00:00:00.620Z",
                 "pickupWindowStart":"2016-08-05T08:00:00.620Z",
                 "pickupWindowEnd":"2016-08-05T18:00:00.620Z",
                 "deliveryWindowStart":"2016-08-07T10:00:00.620Z",
@@ -302,13 +322,17 @@ Loads can be modified only by users with the `shipper` role and only when their 
                 "equipment":"FLATBED",
                 "fullOrPartial":"Full",
                 "weight": 1200,
+                "density": 0.00,
                 "packages": 60,
                 "packageType":"Carton",
                 "length":"0",
                 "width":"0",
                 "height":"0",
                 "measureUnit": "cm",
-                "eta": "2000-00-00T00:00:00.620Z",
+                "estimatedTimeOfArrival": "2000-00-00T00:00:00.620Z",
+                "realTimeOfArrival": "2000-00-00T00:00:00.620Z",
+                "estimatedPickupDate": "2000-00-00T00:00:00.620Z",
+                "realPickupDate": "2000-00-00T00:00:00.620Z",
                 "pickupWindowStart":"2016-08-05T08:00:00.620Z",
                 "pickupWindowEnd":"2016-08-05T18:00:00.620Z",
                 "deliveryWindowStart":"2016-08-07T10:00:00.620Z",
@@ -334,13 +358,17 @@ Loads can be modified only by users with the `shipper` role and only when their 
                 "equipment":"FLATBED",
                 "fullOrPartial":"Full",
                 "weight": 1200,
+                "density": 0.00,
                 "packages": 60,
                 "packageType":"Carton",
                 "length":"0",
                 "width":"0",
                 "height":"0",
                 "measureUnit": "cm",
-                "eta": "2000-00-00T00:00:00.620Z",
+                "estimatedTimeOfArrival": "2000-00-00T00:00:00.620Z",
+                "realTimeOfArrival": "2000-00-00T00:00:00.620Z",
+                "estimatedPickupDate": "2000-00-00T00:00:00.620Z",
+                "realPickupDate": "2000-00-00T00:00:00.620Z",
                 "pickupWindowStart":"2016-08-05T08:00:00.620Z",
                 "pickupWindowEnd":"2016-08-05T18:00:00.620Z",
                 "deliveryWindowStart":"2016-08-07T10:00:00.620Z",
@@ -397,13 +425,17 @@ The allowed changes depending on the current status are:
                 "equipment":"FLATBED",
                 "fullOrPartial":"Full",
                 "weight": 1200,
+                "density": 0.00,
                 "packages": 60,
                 "packageType":"Carton",
                 "length":"0",
                 "width":"0",
                 "height":"0",
                 "measureUnit": "cm",
-                "eta": "2000-00-00T00:00:00.620Z",
+                "estimatedTimeOfArrival": "2000-00-00T00:00:00.620Z",
+                "realTimeOfArrival": "2000-00-00T00:00:00.620Z",
+                "estimatedPickupDate": "2000-00-00T00:00:00.620Z",
+                "realPickupDate": "2000-00-00T00:00:00.620Z",
                 "pickupWindowStart":"2016-08-05T08:00:00.620Z",
                 "pickupWindowEnd":"2016-08-05T18:00:00.620Z",
                 "deliveryWindowStart":"2016-08-07T10:00:00.620Z",
@@ -452,6 +484,8 @@ Get the list of Shippers, only user with the `admin` user role can access this r
 
 ### List equipment types [GET]
 Get the list of equipment types
+Weight must be expressed in pounds
+Volume must be expressed un
 
 + Request
     + Headers
@@ -463,7 +497,10 @@ Get the list of equipment types
         [
             {
                 "equipmentTypeId": 1,
-                "name": "flatbed"
+                "equipmentCode":"FLATBED"
+                "name": "flatbed",
+                "maxWeight": 0.00,
+                "maxVolume": 0.00
             }
         ]
 
@@ -520,7 +557,7 @@ Get the list of border crossing locations
 
 ## Package Types [/packagetypes]
 
-### List Package Typeslist of package types
+### List of package types
 
 + Request
     + Headers
@@ -564,9 +601,51 @@ Get the list of border crossing locations
             },
         ]
 
+## Commodities [/commodities]
+
+### List of commodities
+
++ Request
+    + Headers
+    
+            Authorization: Bearer <access_token>
+
++ Response 200 (application/json)
+
+        [
+            {
+                "id": 1,
+                "code": "Corn",
+                "name": "Corn",
+                "poundsPerCubicFoot": 0.00,
+                "type": "Grain"
+            },
+            {
+                "id": 2,
+                "code": "Rice",
+                "name": "Rice",
+                "poundsPerCubicFoot": 0.00,
+                "type": "Grain"
+            },
+            {
+                "id": 3,
+                "code": "Wheat",
+                "name": "Wheat",
+                "poundsPerCubicFoot": 0.00,
+                "type": "Grain"
+            },
+            {
+                "id": 4,
+                "code": "Sorgum",
+                "name": "Sorgum",
+                "poundsPerCubicFoot": 0.00,
+                "type": "Grain"
+            },
+        ]
+
 ## Group Quotations
 
-## Quotation [/quotation{?equipment,commodity,oCountry,oZip,oState,oCity,oAddress,dCountry,dZip,dState,dCity,dAddress,customerId}]
+## General Quotation [/quotation{?equipment,commodity,oCountry,oZip,oState,oCity,oAddress,dCountry,dZip,dState,dCity,dAddress,customerId}]
 
 + Parameters
     + equipment (required, string) ... Equipment type code
@@ -616,4 +695,65 @@ Get quotation for provided origin and destination
             "isMinimumRate": false,
             "minimumRate": 100.00,
             "rateOriginId": 7
+        }
+
+## Bulk Grain Quotation [/quotation_bulk_grain{?equipment,commodity,weight,bushels,oCountry,oZip,oState,oCity,oAddress,dCountry,dZip,dState,dCity,dAddress,customerId}]
+
++ Parameters
+    + equipment (required, string) ... Equipment type code (Must be HOPPER)
+    + commodity (required, string) ... Commodity (Must be a code present in commodities catalog with type 'Grain' and a valid poundsPerCubicFoot) 
+    + weight (required, string) ... Cargo weight expressed in pounds (required if bushels quantity is not provided)
+    + bushels (required, string) ... Cargo volume expressed in bushels (required if cargo weight is not provided)
+    + oCountry (required, string) ... Origin country code (USA, MEX, CAN)
+    + oZip (required, string) ... Origin Zip code
+    + oState (required, string) ... Origin state code
+    + oCity (required, string) ... Origin city name
+    + oAddress (optional, string) ... Origin street address
+    + dCountry (required, string) ... Destination country code (USA, MEX, CAN)
+    + dZip (required, string) ... Destination Zip code
+    + dState (required, string) ... Destination state code
+    + dCity (required, string) ... Destination city name
+    + dAddress (optional, string) ... Destination street address
+    + customerId (required, string) ... WARNING! This parameter is temporary, right now is required, send 115 for testing purposes, in the near future this parameters would be ignored
+
+### Get bulk grain quotation [GET]
+Get bulk grain quotation for provided origin and destination
+
++ Request
+    + Headers
+    
+            Authorization: Bearer <access_token>
+
++ Response 200 (application/json)
+
+        {
+            "quotationId": 23200,
+            "equipment": "HOPPER",
+            "commodity": "Corn",
+            "oCountry": "USA",
+            "oZip": "78045",
+            "oState": "TX",
+            "oCity": "Laredo",
+            "oAddress": "8200 San Gabriel",
+            "dCountry": "USA",
+            "dZip": "30304",
+            "dState": "GA",
+            "dCity": "Atlanta",
+            "dAddress": "215 Lincoln st",
+            "ammount": 1200.00,
+            "mileage":100,
+            "validFrom": "2016-08-05T00:00:00.620Z",
+            "validThru": "2016-08-10T18:00:00.620Z",
+            "rateId": "90791c5f-5ab9-4622-ba8d-c975ca6665aa",
+            "customerExclusive": true,
+            "isMinimumRate": false,
+            "minimumRate": 100.00,
+            "rateOriginId": 7,
+            "totalWeight":0.00,
+            "totalVolumeft3":0.00,
+            "trucksRequired":2,
+            "maxPoundsPerTruck":51700.0,
+            "maxVolumeFt3Pertruck":1200.00,
+            "lastTruckVolumeCapacityUsedPercent":0.00,
+            "lastTruckWeightCapacityUsedPercent":0.00
         }
