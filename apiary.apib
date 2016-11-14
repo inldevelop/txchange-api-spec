@@ -480,7 +480,7 @@ Get the list of Shippers, only user with the `admin` user role can access this r
         ]
 
 ## Group Catalogs
-## EquipmentType [/equipmenttype]
+## EquipmentType [/equipment_types]
 
 ### List equipment types [GET]
 Get the list of equipment types
@@ -532,7 +532,7 @@ Get the list of countries
         ]
 
 
-## BorderCrossing [/bordercrossing]
+## Border Crossing [/border_crossings]
 
 ### List BorderCrossing [GET]
 Get the list of border crossing locations
@@ -701,9 +701,9 @@ Get quotation for provided origin and destination
 
 + Parameters
     + equipment (required, string) ... Equipment type code (Must be HOPPER)
-    + commodity (required, string) ... Commodity (Must be a code present in commodities catalog with type 'Grain' and a valid poundsPerCubicFoot) 
+    + commodity (required, string) ... Commodity (Must be a code present in commodities catalog with type 'Grain' and a valid poundsPerCubicFoot) To get a list of commodities use the /commodities endpoint, only commodities with commodityCode and a valid poundsPerCubicFoot value can be used.
     + weight (required, string) ... Cargo weight expressed in pounds (required if bushels quantity is not provided)
-    + bushels (required, string) ... Cargo volume expressed in bushels (required if cargo weight is not provided)
+    + bushels (required, string) ... Cargo volume expressed in bushels (required if cargo weight is not provided) (Weight and bushels parameters are mutually exclusive, only one of them can have a value distinct from zero)
     + oCountry (required, string) ... Origin country code (USA, MEX, CAN)
     + oZip (required, string) ... Origin Zip code
     + oState (required, string) ... Origin state code
@@ -718,6 +718,9 @@ Get quotation for provided origin and destination
 
 ### Get bulk grain quotation [GET]
 Get bulk grain quotation for provided origin and destination
+
+For a list of supported Commodity Codes use the /commodities endpoint.
+
 
 + Request
     + Headers
@@ -750,10 +753,10 @@ Get bulk grain quotation for provided origin and destination
             "minimumRate": 100.00,
             "rateOriginId": 7,
             "totalWeight":0.00,
-            "totalVolumeft3":0.00,
+            "totalVolume":0.00,
             "trucksRequired":2,
             "maxPoundsPerTruck":51700.0,
-            "maxVolumeFt3Pertruck":1200.00,
+            "maxVolumePertruck":1200.00,
             "lastTruckVolumeCapacityUsedPercent":0.00,
             "lastTruckWeightCapacityUsedPercent":0.00
         }
