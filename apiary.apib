@@ -164,7 +164,7 @@ taken and also the loads already taken by the carrier.
 ### Create a New Load [POST]
 Create a new load. A new load can be created with `Inactive` or `Posted` status.  
 Only users with the `shipper` role can call this action.
-
+The pickupsRequired field allows to place multiple pickup load posts, when pickupsRequired>=2 multiple loads are created and returned in an array with the number of pickup of each load returned in the pickupNumber field.
 
 + Request
     + Headers
@@ -178,8 +178,8 @@ Only users with the `shipper` role can call this action.
                 "loadId": 0,
                 "shipperId": 0,
                 "quotationId": 0,
+                "pickupsRequired": 1,
                 "loadName": "Water pipes",
-                "pickupNumber": 1,
                 "loadReference": "AJ-182377",
                 "rate": 430.00,
                 "origin": {"city":"Laredo", "state":"TX", "country":"USA", "zipcode":"", "streetAddress":""},
@@ -189,17 +189,12 @@ Only users with the `shipper` role can call this action.
                 "equipment":"FLATBED",
                 "fullOrPartial":"Full",
                 "weight": 1200,
-                "density": 0.00,
                 "packages": 60,
                 "packageType":"Carton",
                 "length":"0",
                 "width":"0",
                 "height":"0",
                 "measureUnit": "cm",
-                "estimatedTimeOfArrival": "2016-12-10T00:00:00.620Z",
-                "realTimeOfArrival": "2016-12-10T00:00:00.620Z",
-                "estimatedPickupDate": "2016-12-02T00:00:00.620Z",
-                "realPickupDate": "2016-12-02T00:00:00.620Z",
                 "pickupWindowStart":"2016-08-05T08:00:00.620Z",
                 "pickupWindowEnd":"2016-08-05T18:00:00.620Z",
                 "deliveryWindowStart":"2016-08-07T10:00:00.620Z",
@@ -215,13 +210,15 @@ Only users with the `shipper` role can call this action.
 
     + Body
 
-            {
+            [{
                 "loadId": 1,
                 "shipperId": 1,
                 "carrierId": 0,
                 "quotationId": 0,
-                "loadName": "Water pipes",
                 "pickupNumber": 1,
+                "pickupsRequired": 1,
+                "pickupGroupId": 1,
+                "loadName": "Water pipes",
                 "loadReference": "AJ-182377",
                 "rate": 430.00,
                 "origin": {"city":"Laredo", "state":"TX", "country", "USA", "zipcode":"", "streetAddress":""},
@@ -248,7 +245,7 @@ Only users with the `shipper` role can call this action.
                 "deliveryWindowEnd":"2016-12-10T17:00:00.620Z",
                 "postedOn":"2016-10-31T11:35:43.620Z",
                 "loadStatus":"Inactive"
-            }
+            }]
 
 ## Load [/loads/{loadId}]
 
@@ -269,8 +266,10 @@ Only users with the `shipper` role can call this action.
                 "shipperId": 1,
                 "carrierId": 0,
                 "quotationId": 0,
-                "loadName": "Water pipes",
                 "pickupNumber": 1,
+                "pickupsRequired": 1,
+                "pickupGroupId": 1,
+                "loadName": "Water pipes",
                 "loadReference": "AJ-182377",
                 "rate": 430.00,
                 "origin": {"city":"Laredo", "state":"TX", "country", "USA", "zipcode":"", "streetAddress":""},
@@ -301,6 +300,7 @@ Only users with the `shipper` role can call this action.
     
 ### Update a Load [PUT]
 Loads can be modified only by users with the `shipper` role and only when their status is `Inactive` or `Posted`
+Some fields cannot be modified like pickupNumber, pickupsRequired and pickupGroupId
 
 + Request
     + Headers
@@ -312,7 +312,6 @@ Loads can be modified only by users with the `shipper` role and only when their 
     
             {
                 "loadName": "Water pipes",
-                "pickupNumber": 1,
                 "loadReference": "AJ-182377",
                 "rate": 430.00,
                 "origin": {"city":"Laredo", "state":"TX", "country", "USA", "zipcode":"", "streetAddress":""},
@@ -347,8 +346,10 @@ Loads can be modified only by users with the `shipper` role and only when their 
                 "shipperId": 1,
                 "quotationId": 0,
                 "carrierId": 0,
-                "loadName": "Water pipes",
                 "pickupNumber": 1,
+                "pickupsRequired": 1,
+                "pickupGroupId": 1,
+                "loadName": "Water pipes",
                 "loadReference": "AJ-182377",
                 "rate": 430.00,
                 "origin": {"city":"Laredo", "state":"TX", "country": "USA", "zipcode":"", "streetAddress":""},
@@ -414,8 +415,10 @@ The allowed changes depending on the current status are:
                 "loadId": 2,
                 "shipperId": 1,
                 "carrierId": 0,
-                "loadName": "Water pipes",
                 "pickupNumber": 1,
+                "pickupsRequired": 1,
+                "pickupGroupId": 1,
+                "loadName": "Water pipes",
                 "loadReference": "AJ-182377",
                 "rate": 430.00,
                 "origin": {"city":"Laredo", "state":"TX", "country", "USA", "zipcode":"", "streetAddress":""},
